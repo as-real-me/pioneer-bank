@@ -21,8 +21,52 @@
             <br>
             <input type="password" class="form-control" name="" id="" placeholder="Password">
             <br>
-            <button class="btn btn-success">Submit</button>
+            <button id="login" class="btn btn-success">Submit</button>
         </div>
+    </div>
+
+     <!-- After login display -->
+     <div id="transection-area">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="deposit status">
+            <h5>Deposit</h5>
+            <h2>$ <span id="currentDeposit">00</span></h2>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="widthraw status">
+            <h5>Widthraw</h5>
+            <h2>$ <span id="totalWidthraw">00</span></h2>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="balance status">
+            <h5>Balance</h5>
+            <h2>$ <span id="currentBalance">1240</span></h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="submit-area">
+            <h4>Deposit</h4>
+            <input type="text" id="depositAmount" placeholder="$ amount you want to deposit" class="form-control">
+            <br>
+            <button id="addDepositBtn" class="btn btn-success">Deposit</button>
+           </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="submit-area">
+            <h4>Widthraw</h4>
+            <input type="text" id="widthrawAmount" placeholder="$ amount you want to withdraw" class="form-control">
+            <br>
+            <button id="widthdrawBtn" class="btn btn-success">Widthraw</button>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -31,6 +75,62 @@
 
 
     <!-- Optional JavaScript -->
+    <script>
+
+      // Login button event handler
+      const loginBtn = document.getElementById("login");
+      loginBtn.addEventListener("click", function(){
+        const loginArea = document.getElementById("login-area");
+        loginArea.style.display = "none";
+        const transaction = document.getElementById("transection-area");
+        transaction.style.display = "block";
+      })
+
+      //Deposite button event handler
+      const depositBtn = document.getElementById("addDepositBtn");
+      depositBtn.addEventListener("click", function(){
+        const depositAmount = getInputNumber("depositAmount");   
+        
+        // Deposite Amount
+        updateSpanText("currentDeposit", depositAmount);
+        // Current Balance
+        updateSpanText("currentBalance", depositAmount);
+        
+        document.getElementById("depositAmount").value = "";
+      })
+
+
+      //Widthdraw button handler
+      const withdrawBtn = document.getElementById("widthdrawBtn");
+      withdrawBtn.addEventListener("click", function(){
+        const  widthrawAmount = getInputNumber("widthrawAmount");
+
+        updateSpanText("totalWidthraw", widthrawAmount);
+        updateSpanText("currentBalance", -1 * widthrawAmount);
+
+        document.getElementById("widthrawAmount").value = "";
+      })
+
+
+      //Get input function
+      function getInputNumber(id){
+        const input = document.getElementById(id).value;
+        const inputNumber = parseFloat(input);
+        return inputNumber;
+      }
+
+      // Upadte span text fuction
+      function updateSpanText(id, depositAmount){
+
+        const current = document.getElementById(id).innerText;
+        const currentNumber= parseFloat(current);
+        const totalAmount = currentNumber + depositAmount;
+        document.getElementById(id).innerText = totalAmount;
+
+      }
+
+
+    </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
